@@ -41,9 +41,7 @@ switch (command) {
 function spotifyThis() {
 
 }
-function movieThis() {
-    axios.get().then().catch();
-}
+
 function doWhatItSays() {
 
 }
@@ -60,8 +58,8 @@ function concertThis() {
             console.log(chalk.blue`===`);
 
             //show number of upcoming shows
-            console.log(chalk`{blue === }  There are ${arr.length} upcoming shows for {blue ${seacrhTerm.toUpperCase()}}!`); 
-            console.log(chalk.blue `===`);
+            console.log(chalk`{blue === }  There are ${arr.length} upcoming shows for {blue ${seacrhTerm.toUpperCase()}}!`);
+            console.log(chalk.blue`===`);
 
             //itearate trough each show and fetch the data
             arr.forEach(element => {
@@ -77,16 +75,29 @@ function concertThis() {
             console.log(error)
         });
 }
-/*
-    * spotify-this-song
-        - node comand: node liri.js spotify-this-song '<song name here>'
-        - API: spotify
-        - response: Artist(s), the song's name, a preview link of the song from Spotify, the album that the song is from
-        - If no song is provided then your program will default to "The Sign" by Ace of Base.
-        - package:
-            npm install --save node-spotify-api
-            https://www.npmjs.com/package/node-spotify-api
 
+//OMDB
+function movieThis() {
+    if (!seacrhTerm) {
+        seacrhTerm = "Mr. Nobody";
+    }
+    axios
+        .get("http://www.omdbapi.com/?t=" + seacrhTerm + "&apikey=" + keys.omdb.apikey)
+        .then(function (response) {
+            console.log(response.data.Title);
+            console.log(response.data.Year);
+            console.log(response.data.Actors);
+            console.log(response.data.Plot);
+            console.log(response.data.Language);
+            console.log(response.data.Country);
+            console.log(response.data.Ratings[0].Value);
+            console.log(response.data.Ratings[1].Value);
+        })
+        .catch(function (error) {
+            console.log(error)
+        });
+}
+/*
 
     * movie-this
         - node comand: node liri.js movie-this '<movie name here>'
@@ -100,6 +111,18 @@ function concertThis() {
                     * Plot of the movie.
                     * Actors in the movie.
         - If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
+
+
+    * spotify-this-song
+        - node comand: node liri.js spotify-this-song '<song name here>'
+        - API: spotify
+        - response: Artist(s), the song's name, a preview link of the song from Spotify, the album that the song is from
+        - If no song is provided then your program will default to "The Sign" by Ace of Base.
+        - package:
+            npm install --save node-spotify-api
+            https://www.npmjs.com/package/node-spotify-api
+
+
 
 
 
