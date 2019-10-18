@@ -12,7 +12,7 @@ moment().format();
 console.log(moment().format())
 
 let command = process.argv[2];
-let seacrhTerm = process.argv[3];
+let seacrhTerm = process.argv.slice(3).join(" ");
 
 switch (command) {
     case 'concert-this':
@@ -39,50 +39,43 @@ switch (command) {
 
 
 function spotifyThis() {
-    
+
 }
 function movieThis() {
     axios.get().then().catch();
 }
 function doWhatItSays() {
-    
+
 }
-
-
-/*
-Make it so liri.js can take in one of the following commands:
-    * concert-this
-        -  node comand: node liri.js concert-this <artist/band name here>
-        -  API: bands in town
-        -  API request: "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"
-        -  response: Name of the venue, venue location, date of the event (use moment to format this as "MM/DD/YYYY")
-*/
 
 //bands in town
 function concertThis() {
     //using axios to fetch data from bands i  tomw
     axios
-    .get("https://rest.bandsintown.com/artists/" + seacrhTerm + "/events?app_id=codingbootcamp")
-    .then(function (response) {
-        let arr = response.data; //give it short name
-        console.log(`Artist:  ${seacrhTerm}\n`) ;// log the artista name
-        console.log(`There are ${arr.length} upcoming shows for ${seacrhTerm}\n`); //show number of upcoming shows
-        //itearate trough each show and fetch the data
-        arr.forEach(element => {
-            console.log(chalk.blue `============================================`);  
-            console.log(chalk `{blue === }  At ${element.venue.name}`);
-            console.log(chalk `{blue === }  In ${(element.venue.city)} ${element.venue.region}, ${element.venue.country}`);
-            console.log(chalk `{blue === }  ${moment(element.datetime).format("MMMM Do YYYY, h:mm a")}`);
-            console.log(chalk.blue `============================================\n`);     
-                  
+        .get("https://rest.bandsintown.com/artists/" + seacrhTerm + "/events?app_id=codingbootcamp")
+        .then(function (response) {
+            let arr = response.data; //give it short name
+            console.log(`Artist:  ${seacrhTerm}\n`);// log the artista name
+            console.log(chalk.blue`===================================================================`);
+            console.log(chalk.blue`===`);
 
-            
+            //show number of upcoming shows
+            console.log(chalk`{blue === }  There are ${arr.length} upcoming shows for {blue ${seacrhTerm.toUpperCase()}}!`); 
+            console.log(chalk.blue `===`);
+
+            //itearate trough each show and fetch the data
+            arr.forEach(element => {
+                console.log(chalk.blue`===================================================================`);
+                console.log(chalk`{blue === }  At ${element.venue.name}`);
+                console.log(chalk`{blue === }  In ${(element.venue.city)} ${element.venue.region}, ${element.venue.country}`);
+                console.log(chalk`{blue === }  ${moment(element.datetime).format("MMMM Do YYYY, h:mm a")}`);
+                console.log(chalk.blue`===================================================================\n`);
+            });
+
+        })
+        .catch(function (error) {
+            console.log(error)
         });
-        
-    })
-    .catch(function (error) {
-        console.log(error)
-    });
 }
 /*
     * spotify-this-song
