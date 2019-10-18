@@ -8,8 +8,8 @@ const dotenv = require('dotenv').config();
 const chalk = require('chalk'); //colored text
 const center = require('center-align'); //align center
 
-moment().format();
-console.log(moment().format())
+//moment().format();
+//console.log(moment().format())
 
 let command = process.argv[2];
 let seacrhTerm = process.argv.slice(3).join(" ");
@@ -53,10 +53,9 @@ function concertThis() {
         .get("https://rest.bandsintown.com/artists/" + seacrhTerm + "/events?app_id=codingbootcamp")
         .then(function (response) {
             let arr = response.data; //give it short name
-            console.log(`Artist:  ${seacrhTerm}\n`);// log the artista name
+            //console.log(`Artist:  ${seacrhTerm}\n`);// log the artista name
             console.log(chalk.blue`===================================================================`);
             console.log(chalk.blue`===`);
-
             //show number of upcoming shows
             console.log(chalk`{blue === }  There are ${arr.length} upcoming shows for {blue ${seacrhTerm.toUpperCase()}}!`);
             console.log(chalk.blue`===`);
@@ -78,20 +77,36 @@ function concertThis() {
 
 //OMDB
 function movieThis() {
+    
+
     if (!seacrhTerm) {
         seacrhTerm = "Mr. Nobody";
     }
     axios
         .get("http://www.omdbapi.com/?t=" + seacrhTerm + "&apikey=" + keys.omdb.apikey)
         .then(function (response) {
-            console.log(response.data.Title);
-            console.log(response.data.Year);
-            console.log(response.data.Actors);
-            console.log(response.data.Plot);
-            console.log(response.data.Language);
-            console.log(response.data.Country);
-            console.log(response.data.Ratings[0].Value);
-            console.log(response.data.Ratings[1].Value);
+            let arr = response.data; //give it short name
+            let words = arr.Plot.split(" "); //grab plot and make an array of it
+            //purely for aesthetic purposes
+            let firstPart = words.slice(0, Math.floor(words.length / 2)).join(" "); // slice and join the first half of my array
+            let secondPart = words.slice(Math.floor(words.length / 2), words.length).join(" "); // slice and join the second half of my array
+
+            console.log(chalk.green("=================================================================================" +
+                                    "================================================================================="));
+            console.log(chalk.green`===`);
+            //show number of upcoming shows
+            console.log(chalk `{green ===                    Title:} {yellow ${arr.Title.toUpperCase()}}`);
+            console.log(chalk `{green ===                     Year:} {yellow ${arr.Year}}`);
+            console.log(chalk `{green ===                 Language:} {yellow ${arr.Language}}`);
+            console.log(chalk `{green ===                  Country:} {yellow ${arr.Country}}`);
+            console.log(chalk `{green ===  ${arr.Ratings[0].Source}:} {yellow ${arr.Ratings[0].Value}}`);
+            console.log(chalk `{green ===          ${arr.Ratings[1].Source}:} {yellow ${arr.Ratings[1].Value}}`);
+            console.log(chalk `{green ===                   Actors:} {yellow ${arr.Actors}}`);
+            console.log(chalk `{green ===                     Plot:} {yellow ${firstPart}}`);
+            console.log(chalk `{green ===                          } {yellow ${secondPart}}`);
+            console.log(chalk.green`===`);
+            console.log(chalk.green("=================================================================================" +
+                                    "================================================================================="));
         })
         .catch(function (error) {
             console.log(error)
@@ -99,18 +114,6 @@ function movieThis() {
 }
 /*
 
-    * movie-this
-        - node comand: node liri.js movie-this '<movie name here>'
-        - API: OMDB
-        - output:   * Title of the movie.
-                    * Year the movie came out.
-                    * IMDB Rating of the movie.
-                    * Rotten Tomatoes Rating of the movie.
-                    * Country where the movie was produced.
-                    * Language of the movie.
-                    * Plot of the movie.
-                    * Actors in the movie.
-        - If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
 
 
     * spotify-this-song
