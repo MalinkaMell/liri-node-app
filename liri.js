@@ -19,7 +19,7 @@ switch (command) {
         break;
     case 'spotify-this-song':
         console.log('we are in spotify-this-song');
-        spotifyThis();
+        spotifyThis(seacrhTerm);
         break;
     case 'movie-this':
         console.log('we are in movie-this');
@@ -35,13 +35,6 @@ switch (command) {
         break;
 }
 
-
-function spotifyThis(seacrhTerm) {
-
-}
-
-
-
 //bands in town
 function concertThis(seacrhTerm) {
     if (!seacrhTerm) {
@@ -54,7 +47,7 @@ function concertThis(seacrhTerm) {
         .then(function (response) {
             let arr = response.data; //give it short name
             console.log(`https://rest.bandsintown.com/artists/${seacrhTerm}/events?app_id=codingbootcamp`);
-            
+
             console.log(chalk.blue`===================================================================`);
             console.log(chalk.blue`===`);
             //show number of upcoming shows
@@ -78,8 +71,6 @@ function concertThis(seacrhTerm) {
 
 //OMDB
 function movieThis(seacrhTerm) {
-    
-
     if (!seacrhTerm) {
         seacrhTerm = "Mr. Nobody";
     }
@@ -93,30 +84,31 @@ function movieThis(seacrhTerm) {
             let secondPart = words.slice(Math.floor(words.length / 2), words.length).join(" "); // slice and join the second half of my array
 
             console.log(chalk.green("=================================================================================" +
-                                    "================================================================================="));
+                "================================================================================="));
             console.log(chalk.green`===`);
             //show number of upcoming shows
-            console.log(chalk `{green ===                    Title:} {yellow ${arr.Title.toUpperCase()}}`);
-            console.log(chalk `{green ===                     Year:} {yellow ${arr.Year}}`);
-            console.log(chalk `{green ===                 Language:} {yellow ${arr.Language}}`);
-            console.log(chalk `{green ===                  Country:} {yellow ${arr.Country}}`);
-            console.log(chalk `{green ===  ${arr.Ratings[0].Source}:} {yellow ${arr.Ratings[0].Value}}`);
-            console.log(chalk `{green ===          ${arr.Ratings[1].Source}:} {yellow ${arr.Ratings[1].Value}}`);
-            console.log(chalk `{green ===                   Actors:} {yellow ${arr.Actors}}`);
-            console.log(chalk `{green ===                     Plot:} {yellow ${firstPart}}`);
-            console.log(chalk `{green ===                          } {yellow ${secondPart}}`);
+            console.log(chalk`{green ===                    Title:} {yellow ${arr.Title.toUpperCase()}}`);
+            console.log(chalk`{green ===                     Year:} {yellow ${arr.Year}}`);
+            console.log(chalk`{green ===                 Language:} {yellow ${arr.Language}}`);
+            console.log(chalk`{green ===                  Country:} {yellow ${arr.Country}}`);
+            console.log(chalk`{green ===  ${arr.Ratings[0].Source}:} {yellow ${arr.Ratings[0].Value}}`);
+            console.log(chalk`{green ===          ${arr.Ratings[1].Source}:} {yellow ${arr.Ratings[1].Value}}`);
+            console.log(chalk`{green ===                   Actors:} {yellow ${arr.Actors}}`);
+            console.log(chalk`{green ===                     Plot:} {yellow ${firstPart}}`);
+            console.log(chalk`{green ===                          } {yellow ${secondPart}}`);
             console.log(chalk.green`===`);
             console.log(chalk.green("=================================================================================" +
-                                    "================================================================================="));
+                "================================================================================="));
         })
         .catch(function (error) {
             console.log(error)
         });
 }
 
+//do-what-it-says
 function doWhatItSays() {
-    fs.readFile("random.txt", "utf-8", function(err, data) {
-        if(err) {
+    fs.readFile("random.txt", "utf-8", function (err, data) {
+        if (err) {
             return console.log(err);
         }
         let slitOnLineBreak = data.split("\n");
@@ -126,7 +118,7 @@ function doWhatItSays() {
         seacrhTerm = splitCommands[1].trim();
         console.log(command);
         console.log(seacrhTerm);
-        
+
         if (command === "concert-this") {
             concertThis(seacrhTerm);
         } else if (command === "spotify-this-song") {
@@ -136,6 +128,28 @@ function doWhatItSays() {
         }
     })
 }
+
+//spotify
+function spotifyThis(seacrhTerm) {
+    if (!seacrhTerm) {
+        seacrhTerm = "The Sign Ace of Base";
+    }
+    // response: Artist(s), the song's name, a preview link of the song from Spotify, the album that the song is from
+    spotify
+        .search({ type: 'track', query: seacrhTerm })
+        .then(function (response) {
+            console.log(response.tracks.items[0].artists[0].name);
+            console.log(response.tracks.items[0].name);
+            console.log(response.tracks.items[0].preview_url);
+            console.log(response.tracks.items[0].external_urls);
+            console.log(response.tracks.items[0].album.name);
+            
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
+}
+
 /*
 
 
