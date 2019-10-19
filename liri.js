@@ -138,11 +138,27 @@ function spotifyThis(seacrhTerm) {
     spotify
         .search({ type: 'track', query: seacrhTerm })
         .then(function (response) {
-            console.log(response.tracks.items[0].artists[0].name);
-            console.log(response.tracks.items[0].name);
-            console.log(response.tracks.items[0].preview_url);
-            console.log(response.tracks.items[0].external_urls);
-            console.log(response.tracks.items[0].album.name);
+            let makeItShort = response.tracks.items[0];
+            console.log(makeItShort.artists[0].name);
+            console.log(makeItShort.name);
+            console.log(makeItShort.external_urls);
+            console.log(makeItShort.album.name);
+
+            console.log(chalk`
+                {yellow ===============================================================================================
+                ===         __ 
+                ===        |  |      __ 
+                ===        |  |__   |  |
+                ===        |  |  |__|  |}    Artist: {cyan ${makeItShort.artists[0].name}}
+                {yellow ===     __ |  |  |  |  |}      Song: {cyan ${makeItShort.name}}
+                {yellow ===    |  |   |  |  |  |}     Album: {cyan ${makeItShort.album.name}}
+                {yellow ===    |  |         |  |}      Link: {blue.underline ${makeItShort.external_urls.spotify}}
+                {yellow ===    |_              | 
+                ===       |           | 
+                ===        |         | 
+                ===        |         | 
+                ===============================================================================================}`)
+        
             
         })
         .catch(function (err) {
@@ -151,30 +167,6 @@ function spotifyThis(seacrhTerm) {
 }
 
 /*
-
-
-
-    * spotify-this-song
-        - node comand: node liri.js spotify-this-song '<song name here>'
-        - API: spotify
-        - response: Artist(s), the song's name, a preview link of the song from Spotify, the album that the song is from
-        - If no song is provided then your program will default to "The Sign" by Ace of Base.
-        - package:
-            npm install --save node-spotify-api
-            https://www.npmjs.com/package/node-spotify-api
-
-
-
-
-
-
-    * do-what-it-says
-        - node comand: node liri.js do-what-it-says
-        - package: fs
-        - LIRI will take the text inside of random.txt and then use it to call one of LIRI's commands
-        - It should run spotify-this-song for "I Want it That Way," as follows the text in random.txt
-        - Edit the text in random.txt to test out the feature for movie-this and concert-this.
-
     BONUS:
         - In addition to logging the data to your terminal/bash window, output the data to a .txt file called log.txt.
         - Make sure you append each command you run to the log.txt file.
