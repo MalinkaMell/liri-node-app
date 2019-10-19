@@ -12,7 +12,9 @@ console.log(`
         |           |
          |         |
          |         |
+
          `)
+
 console.log(`
          __   
         |  |      __  
@@ -25,4 +27,5 @@ console.log(`
        |           |
         |         |
         |         |
+
         `)

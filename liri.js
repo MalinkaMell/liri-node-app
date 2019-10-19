@@ -1,90 +1,104 @@
-require("dotenv").config();
-const keys = require("./keys.js");
-const Spotify = require('node-spotify-api');
-const axios = require('axios');
-const moment = require('moment');
-const spotify = new Spotify(keys.spotify);
-const dotenv = require('dotenv').config();
+require('dotenv').config(); //to read the .env
+const keys = require('./keys.js'); //import my keys
+const Spotify = require('node-spotify-api'); //spotify
+const axios = require('axios'); //axios for GET requests
+const moment = require('moment'); //moment for nice date and time display
+const spotify = new Spotify(keys.spotify); //spotify
 const chalk = require('chalk'); //colored text
-const center = require('center-align'); //align center
-const fs = require("fs");
+const fs = require("fs"); //file system
 
-let command = process.argv[2];
-let seacrhTerm = process.argv.slice(3).join(" ");
+let command = process.argv[2]; //track user command (concert-this || spotify-this-song || movie-this)
+let seacrhTerm = process.argv.slice(3).join(' '); //track the artist || movie || song
 
+//using switch for a change 
 switch (command) {
     case 'concert-this':
-        console.log('we are in concert-this');
         concertThis(seacrhTerm);
         break;
     case 'spotify-this-song':
-        console.log('we are in spotify-this-song');
         spotifyThis(seacrhTerm);
         break;
     case 'movie-this':
-        console.log('we are in movie-this');
         movieThis(seacrhTerm);
         break;
     case 'do-what-it-says':
-        console.log('we are in do-what-it-says');
         doWhatItSays()
         break;
-
     default:
-        console.log('no comands')
+        console.log('no comands') //shall i do something here?
         break;
 }
 
 //bands in town
 function concertThis(seacrhTerm) {
+    //default for bands
     if (!seacrhTerm) {
-        seacrhTerm = "Megadeth";
+        seacrhTerm = 'Megadeth';
     }
     console.log(seacrhTerm)
-    //using axios to fetch data from bands i  tomw
+    //using axios to fetch data from bands i  town
     axios
         .get("https://rest.bandsintown.com/artists/" + seacrhTerm + "/events?app_id=codingbootcamp")
         .then(function (response) {
             let arr = response.data; //give it short name
-            console.log(`https://rest.bandsintown.com/artists/${seacrhTerm}/events?app_id=codingbootcamp`);
-
+            //all this mess to make it look pretty in console. is there an easier method?
             console.log(chalk.blue`===================================================================`);
             console.log(chalk.blue`===`);
             //show number of upcoming shows
             console.log(chalk`{blue === }  There are ${arr.length} upcoming shows for {blue ${seacrhTerm.toUpperCase()}}!`);
             console.log(chalk.blue`===`);
+            //write it to log.txt
+            fs.appendFile('log.txt', '===============================================================\n\n' + command +
+                ' ' + seacrhTerm + '\n\n' +
+                'There are ' + arr.length + ' upcoming shows for ' + seacrhTerm.toUpperCase() + '!\n\n',
+                function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                });
 
             //itearate trough each show and fetch the data
             arr.forEach(element => {
                 console.log(chalk.blue`===================================================================`);
                 console.log(chalk`{blue === }  At ${element.venue.name}`);
                 console.log(chalk`{blue === }  In ${(element.venue.city)} ${element.venue.region}, ${element.venue.country}`);
-                console.log(chalk`{blue === }  ${moment(element.datetime).format("MMMM Do YYYY, h:mm a")}`);
+                console.log(chalk`{blue === }  ${moment(element.datetime).format('MMMM Do YYYY, h:mm a')}`);
                 console.log(chalk.blue`===================================================================\n`);
-            });
 
+                //write it to log.txt
+                fs.appendFile('log.txt', 'At ' + element.venue.name + '.\nIn ' + element.venue.city + element.venue.region +
+                    element.venue.country + '\n' + moment(element.datetime).format('MMMM Do YYYY, h:mm a') +
+                    '\n\n',
+                    function (err) {
+                        if (err) {
+                            return console.log(err);
+                        }
+                    });
+            });
         })
-        .catch(function (error) {
-            console.log(error)
+        .catch(function (err) {
+            console.log(err)
         });
 }
 
 //OMDB
 function movieThis(seacrhTerm) {
+    //default for movies
     if (!seacrhTerm) {
-        seacrhTerm = "Mr. Nobody";
+        seacrhTerm = 'Mr. Nobody';
     }
     axios
         .get("http://www.omdbapi.com/?t=" + seacrhTerm + "&apikey=" + keys.omdb.apikey)
         .then(function (response) {
             let arr = response.data; //give it short name
-            let words = arr.Plot.split(" "); //grab plot and make an array of it
-            //purely for aesthetic purposes
-            let firstPart = words.slice(0, Math.floor(words.length / 2)).join(" "); // slice and join the first half of my array
-            let secondPart = words.slice(Math.floor(words.length / 2), words.length).join(" "); // slice and join the second half of my array
+            let words = arr.Plot.split(' '); //grab plot and make an array of it
+            //purely for aesthetic purposes 
+            let firstPart = words.slice(0, Math.floor(words.length / 2)).join(' '); // slice and join the first half of my array
+            let secondPart = words.slice(Math.floor(words.length / 2), words.length).join(' '); // slice and join the second half of my array
 
-            console.log(chalk.green("=================================================================================" +
-                "================================================================================="));
+            //loggin everything to console in very pretty window
+            console.log(chalk.green('=================================================================================' +
+                '================================================================================='));
             console.log(chalk.green`===`);
             //show number of upcoming shows
             console.log(chalk`{green ===                    Title:} {yellow ${arr.Title.toUpperCase()}}`);
@@ -97,40 +111,40 @@ function movieThis(seacrhTerm) {
             console.log(chalk`{green ===                     Plot:} {yellow ${firstPart}}`);
             console.log(chalk`{green ===                          } {yellow ${secondPart}}`);
             console.log(chalk.green`===`);
-            console.log(chalk.green("=================================================================================" +
-                "================================================================================="));
+            console.log(chalk.green('=================================================================================' +
+                '================================================================================='));
+            //write it to log.txt
+            fs.appendFile('log.txt', '===============================================================\n\n' +
+                command + ' ' + seacrhTerm + '\n\n' +
+                'Title: ' + arr.Title + '\n' +
+                'Year: ' + arr.Year + '\n' +
+                'Language: ' + arr.Language + '\n' +
+                'Country: ' + arr.Country + '\n' +
+                arr.Ratings[0].Source + ': ' + arr.Ratings[0].Value + '\n' +
+                arr.Ratings[1].Source + ': ' + arr.Ratings[1].Value + '\n' +
+                'Actors: ' + arr.Actors + '\n' +
+                'Plot: ' + arr.Plot + '\n\n',
+                function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                });
         })
-        .catch(function (error) {
-            console.log(error)
+        .catch(function (err) {
+            console.log('logging error ' + err);
+            //ask for help one of TAs, it's not catching
+            /* fs.appendFile('log.txt', '===============================================================\n\n' + err + '\n\n',
+                function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                }); */
         });
-}
-
-//do-what-it-says
-function doWhatItSays() {
-    fs.readFile("random.txt", "utf-8", function (err, data) {
-        if (err) {
-            return console.log(err);
-        }
-        let slitOnLineBreak = data.split("\n");
-        let randomChoise = Math.floor(Math.random() * slitOnLineBreak.length);
-        let splitCommands = slitOnLineBreak[randomChoise].split(",");
-        command = splitCommands[0].trim();
-        seacrhTerm = splitCommands[1].trim();
-        console.log(command);
-        console.log(seacrhTerm);
-
-        if (command === "concert-this") {
-            concertThis(seacrhTerm);
-        } else if (command === "spotify-this-song") {
-            spotifyThis(seacrhTerm);
-        } else if (command === "movie-this") {
-            movieThis(seacrhTerm);
-        }
-    })
 }
 
 //spotify
 function spotifyThis(seacrhTerm) {
+    //default for song
     if (!seacrhTerm) {
         seacrhTerm = "The Sign Ace of Base";
     }
@@ -139,11 +153,8 @@ function spotifyThis(seacrhTerm) {
         .search({ type: 'track', query: seacrhTerm })
         .then(function (response) {
             let makeItShort = response.tracks.items[0];
-            console.log(makeItShort.artists[0].name);
-            console.log(makeItShort.name);
-            console.log(makeItShort.external_urls);
-            console.log(makeItShort.album.name);
 
+            //hell yeah! that's a rock hand! made it myself! you more than welcome to use it if you like it, grab it clean from from design.js
             console.log(chalk`
                 {yellow ===============================================================================================
                 ===         __ 
@@ -158,17 +169,50 @@ function spotifyThis(seacrhTerm) {
                 ===        |         | 
                 ===        |         | 
                 ===============================================================================================}`)
-        
-            
+            //write it to log.txt
+            fs.appendFile('log.txt', '===============================================================\n\n' +
+                command + ' ' + seacrhTerm + '\n\n' +
+                'Artist: ' + makeItShort.artists[0].name +' \n' +
+                'Song: ' + makeItShort.name + '\n' +
+                'Album: ' + makeItShort.album.name + '\n' +
+                'Link: ' + makeItShort.external_urls.spotify + '\n\n',
+                function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                });
         })
         .catch(function (err) {
             console.log(err);
         });
 }
 
-/*
-    BONUS:
-        - In addition to logging the data to your terminal/bash window, output the data to a .txt file called log.txt.
-        - Make sure you append each command you run to the log.txt file.
-        - Do not overwrite your file each time you run a command.
-*/
+//do-what-it-says
+function doWhatItSays() {
+    //read it from random.txt
+    fs.readFile('random.txt', 'utf-8', function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+        //split string on line break and put it in array
+        let slitOnLineBreak = data.split('\n');
+        //random number from 0 to 2
+        let randomChoise = Math.floor(Math.random() * slitOnLineBreak.length);
+        //splitting the element, dividing the command and value
+        let splitCommands = slitOnLineBreak[randomChoise].split(',');
+        //chosen command
+        command = splitCommands[0].trim();
+        //and value
+        seacrhTerm = splitCommands[1].trim();
+        //calling function based on the command choosen
+        if (command === 'concert-this') {
+            concertThis(seacrhTerm);
+        } else if (command === 'spotify-this-song') {
+            spotifyThis(seacrhTerm);
+        } else if (command === 'movie-this') {
+            movieThis(seacrhTerm);
+        }
+    })
+}
+
+
