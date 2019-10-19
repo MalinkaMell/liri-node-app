@@ -7,9 +7,7 @@ const spotify = new Spotify(keys.spotify);
 const dotenv = require('dotenv').config();
 const chalk = require('chalk'); //colored text
 const center = require('center-align'); //align center
-
-//moment().format();
-//console.log(moment().format())
+const fs = require("fs");
 
 let command = process.argv[2];
 let seacrhTerm = process.argv.slice(3).join(" ");
@@ -17,7 +15,7 @@ let seacrhTerm = process.argv.slice(3).join(" ");
 switch (command) {
     case 'concert-this':
         console.log('we are in concert-this');
-        concertThis();
+        concertThis(seacrhTerm);
         break;
     case 'spotify-this-song':
         console.log('we are in spotify-this-song');
@@ -25,11 +23,11 @@ switch (command) {
         break;
     case 'movie-this':
         console.log('we are in movie-this');
-        movieThis();
+        movieThis(seacrhTerm);
         break;
     case 'do-what-it-says':
         console.log('we are in do-what-it-says');
-        doWhatItSays();
+        doWhatItSays()
         break;
 
     default:
@@ -38,22 +36,25 @@ switch (command) {
 }
 
 
-function spotifyThis() {
+function spotifyThis(seacrhTerm) {
 
 }
 
-function doWhatItSays() {
 
-}
 
 //bands in town
-function concertThis() {
+function concertThis(seacrhTerm) {
+    if (!seacrhTerm) {
+        seacrhTerm = "Megadeth";
+    }
+    console.log(seacrhTerm)
     //using axios to fetch data from bands i  tomw
     axios
         .get("https://rest.bandsintown.com/artists/" + seacrhTerm + "/events?app_id=codingbootcamp")
         .then(function (response) {
             let arr = response.data; //give it short name
-            //console.log(`Artist:  ${seacrhTerm}\n`);// log the artista name
+            console.log(`https://rest.bandsintown.com/artists/${seacrhTerm}/events?app_id=codingbootcamp`);
+            
             console.log(chalk.blue`===================================================================`);
             console.log(chalk.blue`===`);
             //show number of upcoming shows
@@ -76,7 +77,7 @@ function concertThis() {
 }
 
 //OMDB
-function movieThis() {
+function movieThis(seacrhTerm) {
     
 
     if (!seacrhTerm) {
@@ -111,6 +112,29 @@ function movieThis() {
         .catch(function (error) {
             console.log(error)
         });
+}
+
+function doWhatItSays() {
+    fs.readFile("random.txt", "utf-8", function(err, data) {
+        if(err) {
+            return console.log(err);
+        }
+        let slitOnLineBreak = data.split("\n");
+        let randomChoise = Math.floor(Math.random() * slitOnLineBreak.length);
+        let splitCommands = slitOnLineBreak[randomChoise].split(",");
+        command = splitCommands[0].trim();
+        seacrhTerm = splitCommands[1].trim();
+        console.log(command);
+        console.log(seacrhTerm);
+        
+        if (command === "concert-this") {
+            concertThis(seacrhTerm);
+        } else if (command === "spotify-this-song") {
+            spotifyThis(seacrhTerm);
+        } else if (command === "movie-this") {
+            movieThis(seacrhTerm);
+        }
+    })
 }
 /*
 
