@@ -8,7 +8,7 @@ In this assignment, you will make LIRI. LIRI is like iPhone's SIRI. However, whi
 Use the following commands:
 
 * search Spotify for songs
- - node ./liri.js concert-this [band-name]
+ * node ./liri.js concert-this [band-name]
 * search Bands in Town for concerts
  - node ./liri.js spotify-this-song [song-name]
 * search OMDB for movies
