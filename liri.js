@@ -25,7 +25,24 @@ switch (command) {
         doWhatItSays()
         break;
     default:
-        console.log('no comands') //shall i do something here?
+        console.log('||  (O.o)                                                                               (O.o)  ||'.length)
+        console.log(chalk`{blue   _____                                                                                 _____}`);
+        console.log(chalk`{blue  ===============================================================================================}`);
+        console.log(chalk`{blue ||                                                                                             {blue ||}}`);
+        console.log(chalk`{blue ||}  {green (\\_/)}               {cyan  Hello! I am Liri! How may I assist you today?}                  {green (\\_/)}  {blue ||}`);
+        console.log(chalk`{blue ||}  {green (O.o)}                                                                               {green (O.o)}  {blue ||}`);
+        console.log(chalk`{blue ||}  {green (> <)}                    {green  You can choose between four commands:}                     {green (> <)}  {blue ||}`);
+        console.log(chalk`{blue ||}                                                                                             {blue ||}`);
+        console.log(chalk`{blue ||}     {cyan  concert-this [arstist/band name] } {green  to display artist\'s upcoming events information}     {blue ||}`);
+        console.log(chalk`{blue ||}      {cyan  spotify-this-song [song name]} {green  to display information about the song}                  {blue ||}`);
+        console.log(chalk`{blue ||}      {cyan  movie-this [movie name]} {green  to display information about the movie}                       {blue ||}`);
+        console.log(chalk`{blue ||}           {cyan  do-what-it-says} {green  to let me chose random between artist, movie or song!}          {blue  ||}`);
+        console.log(chalk.blue`|||||                                                                                       |||||`);
+        console.log(chalk.blue`    =========================================================================================`);
+        console.log(chalk.blue`     ||                                                                                   ||`);
+        console.log(chalk.blue`     ||___________________________________________________________________________________||`);
+        
+  
         break;
 }
 
@@ -60,9 +77,9 @@ function concertThis(seacrhTerm) {
             //itearate trough each show and fetch the data
             arr.forEach(element => {
                 console.log(chalk.blue`===================================================================`);
-                console.log(chalk`{blue === }  At ${element.venue.name}`);
-                console.log(chalk`{blue === }  In ${(element.venue.city)} ${element.venue.region}, ${element.venue.country}`);
-                console.log(chalk`{blue === }  ${moment(element.datetime).format('MMMM Do YYYY, h:mm a')}`);
+                console.log(chalk`{blue ===    Venue name: }  ${element.venue.name}`)
+                console.log(chalk`{blue === City, country: }  ${(element.venue.city)} ${element.venue.region}, ${element.venue.country}`);
+                console.log(chalk`{blue ===          Date: }  ${moment(element.datetime).format('MMMM Do YYYY, h:mm a')}`);
                 console.log(chalk.blue`===================================================================\n`);
 
                 //write it to log.txt
@@ -156,19 +173,19 @@ function spotifyThis(seacrhTerm) {
 
             //hell yeah! that's a rock hand! made it myself! you more than welcome to use it if you like it, grab it clean from from design.js
             console.log(chalk`
-                {yellow ===============================================================================================
-                ===         __ 
-                ===        |  |      __ 
-                ===        |  |__   |  |
-                ===        |  |  |__|  |}    Artist: {cyan ${makeItShort.artists[0].name}}
-                {yellow ===     __ |  |  |  |  |}      Song: {cyan ${makeItShort.name}}
-                {yellow ===    |  |   |  |  |  |}     Album: {cyan ${makeItShort.album.name}}
-                {yellow ===    |  |         |  |}      Link: {blue.underline ${makeItShort.external_urls.spotify}}
-                {yellow ===    |_              | 
-                ===       |           | 
-                ===        |         | 
-                ===        |         | 
-                ===============================================================================================}`)
+{yellow ===============================================================================================
+===         __ 
+===        |  |      __ 
+===        |  |__   |  |
+===        |  |  |__|  |}    Artist: {cyan ${makeItShort.artists[0].name}}
+{yellow ===     __ |  |  |  |  |}      Song: {cyan ${makeItShort.name}}
+{yellow ===    |  |   |  |  |  |}     Album: {cyan ${makeItShort.album.name}}
+{yellow ===    |  |         |  |}      Link: {blue.underline ${makeItShort.external_urls.spotify}}
+{yellow ===    |_              | 
+===       |           | 
+===        |         | 
+===        |         | 
+===============================================================================================}`)
             //write it to log.txt
             fs.appendFile('log.txt', '===============================================================\n\n' +
                 command + ' ' + seacrhTerm + '\n\n' +
