@@ -18,14 +18,14 @@ Use the following commands:
 * write all the search requests in a .txt fie
     * no need to run any command, he will do it for you 
 
-#### APIs used
+### APIs used
 
 * Spotify
 * Bands In Town
 * OMDB
 * Moment.js
 
-#### Packages Used
+### Packages Used
 
 * **axios** - Promise based HTTP client for the browser and node.js NPM package
 * **chalk** - Terminal strings styling NPM package
@@ -35,9 +35,9 @@ Use the following commands:
 
 [Clik here for video demo of the project](assets/videos/liri.mp4)
 
-#### Screeshots walktrough
+### Screeshots walktrough
 
-##### Entry screen, **node liri.js**
+#### Entry screen, ``` node liri.js ```
 
 ![Intro](assets/images/entry-screen.jpg)
 
