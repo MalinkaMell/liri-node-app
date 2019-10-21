@@ -8,15 +8,15 @@ In this assignment, you will make LIRI. LIRI is like iPhone's SIRI. However, whi
 Use the following commands:
 
 * search Spotify for songs
-    * node ./liri.js concert-this [band-name]
+    * node liri.js concert-this [band-name]
 * search Bands in Town for concerts
- - node ./liri.js spotify-this-song [song-name]
+    * node liri.js spotify-this-song [song-name]
 * search OMDB for movies
- - node ./liri.js movie-this [movie-name]
+    * node liri.js movie-this [movie-name]
 * randomize choise between the three
- - node ./liri.js do-what-it-says
+    * node liri.js do-what-it-says
 * write all the search requests in a .txt fie
- - no need to run any command, he will do it for you 
+    * no need to run any command, he will do it for you 
 
 #### APIs used
 
@@ -33,9 +33,13 @@ Use the following commands:
 * **moment** - Parse, validate, manipulate, and display dates NPM package
 * **node-spotify-api** - A simple wrapper for the spotify api NPM package
 
-[Clik here for video demo of the project](./assets/videos/liri.mp4)
+[Clik here for video demo of the project](assets/videos/liri.mp4)
 
+#### Screeshots walktrough
 
+##### Entry screen, **node liri.js**
+
+![Intro](assets/images/entry-screen.jpg)
 
 
 

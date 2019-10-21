@@ -25,22 +25,22 @@ switch (command) {
         doWhatItSays()
         break;
     default:
-        console.log('||  (O.o)                                                                               (O.o)  ||'.length)
-        console.log(chalk`{blue   _____                                                                                 _____}`);
-        console.log(chalk`{blue  ===============================================================================================}`);
-        console.log(chalk`{blue ||                                                                                             {blue ||}}`);
-        console.log(chalk`{blue ||}  {green (\\_/)}               {cyan  Hello! I am Liri! How may I assist you today?}                  {green (\\_/)}  {blue ||}`);
-        console.log(chalk`{blue ||}  {green (O.o)}                                                                               {green (O.o)}  {blue ||}`);
-        console.log(chalk`{blue ||}  {green (> <)}                    {green  You can choose between four commands:}                     {green (> <)}  {blue ||}`);
-        console.log(chalk`{blue ||}                                                                                             {blue ||}`);
-        console.log(chalk`{blue ||}     {cyan  concert-this [arstist/band name] } {green  to display artist\'s upcoming events information}     {blue ||}`);
-        console.log(chalk`{blue ||}      {cyan  spotify-this-song [song name]} {green  to display information about the song}                  {blue ||}`);
-        console.log(chalk`{blue ||}      {cyan  movie-this [movie name]} {green  to display information about the movie}                       {blue ||}`);
-        console.log(chalk`{blue ||}           {cyan  do-what-it-says} {green  to let me chose random between artist, movie or song!}          {blue  ||}`);
-        console.log(chalk.blue`|||||                                                                                       |||||`);
-        console.log(chalk.blue`    =========================================================================================`);
-        console.log(chalk.blue`     ||                                                                                   ||`);
-        console.log(chalk.blue`     ||___________________________________________________________________________________||`);
+        console.log(chalk`{blue  \n\n _____                                                                                                                        _____}`);
+        console.log(chalk`{blue  ====================================================================================================================================}`);
+        console.log(chalk`{blue ||    __ __      __ __ __ __ __ __   __ __                                                                                          {blue ||}}`);
+        console.log(chalk`{blue ||   |     |    |     |    __ __   \\|     |}  {cyan  Hello! I am Liri! How may I assist you today?}             {yellow (\\_/)}                       {blue ||}`);
+        console.log(chalk`{blue ||   |     |    |     |   |     |   |     |}                                                             {yellow (O.o)}                       {blue ||}`);
+        console.log(chalk`{blue ||   |     |    |     |   |     |   |     |}  {green  You can choose between four commands:}                     {yellow (> <)}                       {blue ||}`);
+        console.log(chalk`{blue ||   |     |    |     |   |__ __|   |     |}                                                                                         {blue ||}`);
+        console.log(chalk`{blue ||   |     |    |     |          __/|     |}   {cyan  concert-this [arstist/band name] } {green  to display artist\'s upcoming events information}   {blue ||}`);
+        console.log(chalk`{blue ||   |     |    |     |     |     \\ |     |}   {cyan  spotify-this-song [song name]} {green  to display information about the song}                 {blue ||}`);
+        console.log(chalk`{blue ||   |     |    |     |     |\\     \\|     |}   {cyan  movie-this [movie name]} {green  to display information about the movie}                      {blue ||}`);
+        console.log(chalk`{blue ||   |     | __ |     |     | \\     |     |}   {cyan  do-what-it-says} {green  to let me chose random between artist, movie or song!}              {blue  ||}`);
+        console.log(chalk`{blue ||   |           \\    |     |  \\     \\    |                                                                                         ||}`);
+        console.log(chalk`{blue ||   |__ __ __ __ \\ __|__ __|   \\__ __\\ __|   {green  Have fun! }                                                                           ||}`);
+        console.log(chalk`{blue ||                                                                                                                                  || }`);
+        console.log(chalk`{blue  ====================================================================================================================================}`);
+        console.log(chalk`{blue   _____                                                                                                                        _____\n\n}`);
         
   
         break;
@@ -50,9 +50,8 @@ switch (command) {
 function concertThis(seacrhTerm) {
     //default for bands
     if (!seacrhTerm) {
-        seacrhTerm = 'Megadeth';
+        seacrhTerm = 'lady gaga';
     }
-    console.log(seacrhTerm)
     //using axios to fetch data from bands i  town
     axios
         .get("https://rest.bandsintown.com/artists/" + seacrhTerm + "/events?app_id=codingbootcamp")
@@ -114,8 +113,8 @@ function movieThis(seacrhTerm) {
             let secondPart = words.slice(Math.floor(words.length / 2), words.length).join(' '); // slice and join the second half of my array
 
             //loggin everything to console in very pretty window
-            console.log(chalk.green('=================================================================================' +
-                '================================================================================='));
+            console.log(chalk.green('==================================================================================' +
+            '============================================================================'));
             console.log(chalk.green`===`);
             //show number of upcoming shows
             console.log(chalk`{green ===                    Title:} {yellow ${arr.Title.toUpperCase()}}`);
@@ -123,13 +122,16 @@ function movieThis(seacrhTerm) {
             console.log(chalk`{green ===                 Language:} {yellow ${arr.Language}}`);
             console.log(chalk`{green ===                  Country:} {yellow ${arr.Country}}`);
             console.log(chalk`{green ===  ${arr.Ratings[0].Source}:} {yellow ${arr.Ratings[0].Value}}`);
+            //sometimes there is no rotten tomato or imd rating, so checking if there is more than one
+            if (arr.Ratings.length > 1) {
             console.log(chalk`{green ===          ${arr.Ratings[1].Source}:} {yellow ${arr.Ratings[1].Value}}`);
+            } 
             console.log(chalk`{green ===                   Actors:} {yellow ${arr.Actors}}`);
             console.log(chalk`{green ===                     Plot:} {yellow ${firstPart}}`);
             console.log(chalk`{green ===                          } {yellow ${secondPart}}`);
             console.log(chalk.green`===`);
             console.log(chalk.green('=================================================================================' +
-                '================================================================================='));
+            '============================================================================'));
             //write it to log.txt
             fs.appendFile('log.txt', '===============================================================\n\n' +
                 command + ' ' + seacrhTerm + '\n\n' +
@@ -137,8 +139,8 @@ function movieThis(seacrhTerm) {
                 'Year: ' + arr.Year + '\n' +
                 'Language: ' + arr.Language + '\n' +
                 'Country: ' + arr.Country + '\n' +
-                arr.Ratings[0].Source + ': ' + arr.Ratings[0].Value + '\n' +
-                arr.Ratings[1].Source + ': ' + arr.Ratings[1].Value + '\n' +
+                //arr.Ratings[0].Source + ': ' + arr.Ratings[0].Value + '\n' +
+                //arr.Ratings[1].Source + ': ' + arr.Ratings[1].Value + '\n' +
                 'Actors: ' + arr.Actors + '\n' +
                 'Plot: ' + arr.Plot + '\n\n',
                 function (err) {
