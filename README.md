@@ -37,11 +37,46 @@ Use the following commands:
 
 ### Screeshots walktrough
 
-#### Entry screen, ``` node liri.js ```
+#### Entry screen, command ``` node liri.js ```
 
-![Intro](assets/images/entry-screen.jpg)
+![liri.js](assets/images/entry-screen.jpg)
 
+#### Search Bands In Town, command ``` node liri.js concert-this ``` - without user input, searching for default value
 
+![concert-this](assets/images/concert-no-input.jpg)
+
+#### Search Bands In Town, command ``` node liri.js concert-this judas pries``` - with user input
+
+![concert-this](assets/images/concert-input.jpg)
+
+#### Search Spotify, command ``` node liri.js spotify-this-song``` - without user input, searching for default value
+
+![spotify-this-song](assets/images/spotify-no-input.jpg)
+
+#### Search Spotify, command ``` node liri.js spotify-this-song alpenglow``` - with user input
+
+![spotify-this-song](assets/images/spotify-input.jpg)
+
+#### clicking on Spotify link
+
+![spotify-this-song](assets/images/spotify-link.jpg)
+
+#### listening to the song
+
+![spotify-this-song](assets/images/spotify-playing.jpg)
+
+#### Search OMDB, command ``` node liri.js movie-this``` - without user input, searching for default value
+
+![spotify-this-song](assets/images/movie-no-input.jpg)
+
+#### Search OMDB, command ``` node liri.js movie-this hobbit``` - with user input (in case of ``` node liri.js american horror story``` there is no rating for rotten tomatoes diplayed)
+
+![spotify-this-song](assets/images/movie-input.jpg)
+
+#### Let Liri choose, he will randomize the choise between the values written in random.txt file. 
+#### Command ``` node liri.js do-what-it-says```
+
+![spotify-this-song](assets/images/do-what-it-says.jpg)
 
 
 
