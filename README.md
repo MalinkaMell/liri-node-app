@@ -33,7 +33,7 @@ Use the following commands:
 * **moment** - Parse, validate, manipulate, and display dates NPM package
 * **node-spotify-api** - A simple wrapper for the spotify api NPM package
 
-[Clik here for video demo of the project](assets/videos/video.mp4)
+[Clik here for video demo of the project](https://github.com/MalinkaMell/liri-node-app/blob/master/assets/videos/video.mp4)
 
 ### Screeshots walktrough
 
