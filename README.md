@@ -83,7 +83,6 @@ Use the following commands:
 
 ---
 
-**Optimized for 1920x1080 screen resolution and Google Chrome Version 78**
 
 _Made for UOA Bootcamp, Week 10, October 2019_
 
